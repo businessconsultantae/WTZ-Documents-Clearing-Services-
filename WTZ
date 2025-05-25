@@ -1,0 +1,47 @@
+project_dir = "/mnt/data/WTZ-Business-App"
+os.makedirs(project_dir, exist_ok=True)
+
+# Create index.html
+index_html = """<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dubai Business Guides - WTZ Documents Clearance Service</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- Content here (omitted for brevity) -->
+<script src="script.js"></script>
+</body>
+</html>"""
+
+# Create style.css
+style_css = """body {
+font-family: Arial, sans-serif;
+background-color: #f4f4f4;
+color: #333;
+}"""
+
+# Create script.js
+script_js = """document.addEventListener('DOMContentLoaded', () => {
+console.log("Script loaded.");
+});"""
+
+# Write files to the directory
+with open(os.path.join(project_dir, "index.html"), "w") as f:
+f.write(index_html)
+
+with open(os.path.join(project_dir, "style.css"), "w") as f:
+f.write(style_css)
+
+with open(os.path.join(project_dir, "script.js"), "w") as f:
+f.write(script_js)
+
+# Create a zip file
+zip_path = "/mnt/data/WTZ-Business-App.zip"
+with ZipFile(zip_path, 'w') as zipf:
+for root, dirs, files in os.walk(project_dir):
+for file in files:
+zipf.write(os.path.join(root, file),
+arcname=os.path.relpath(os.path.join(root, file), project_dir))
